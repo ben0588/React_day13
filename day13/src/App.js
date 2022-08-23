@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink,Route,Routes } from 'react-router-dom';
+import { NavLink,Route,Routes,useNavigate } from 'react-router-dom';
 
 
 // 首頁
@@ -28,12 +28,29 @@ const Login=()=>{
   )
 }
 
-// 待辦事項頁面
+// 待辦事項頁面 (登入成功)
 const Todo=()=>{
   return (
     <>
       <h3>這是待辦事項頁面</h3>
+      <Logout />
     </>
+  )
+}
+
+// 登出元件
+const Logout=()=>{
+  const navigator = useNavigate();
+
+  const logoutBut =()=>{
+    navigator('/login')
+    // 回登陸頁
+  }
+
+  return (
+      <>
+      <button onClick={logoutBut}>登出</button>
+      </>
   )
 }
 
