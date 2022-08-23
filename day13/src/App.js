@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink,Route,Routes,useNavigate,useLocation } from 'react-router-dom';
+import { NavLink,Route,Routes,useNavigate,useLocation,useParams,Outlet } from 'react-router-dom';
 
 
 // 首頁
@@ -21,8 +21,8 @@ const Register=()=>{
 
 // 登陸頁
 const Login=()=>{
-  const location = useLocation();
-  console.log(location.state.id)
+  // const location = useLocation();
+  // console.log(location.state.id)
   return (
     <>
       <h3>這是登入頁面</h3>
@@ -39,6 +39,8 @@ const Todo=()=>{
     </>
   )
 }
+
+// Day14 練習新增:
 
 // 登出元件
 const Logout=()=>{
@@ -65,6 +67,31 @@ const Logout=()=>{
   )
 }
 
+// Day15 練習新增:
+
+const Post =()=>{
+  return (
+    <div>
+    <h3>Post頁面</h3>
+    {/* 這邊顯示的是<PostId />元件 */}
+    <Outlet />
+    </div>
+  )
+}
+
+const PostId =()=>{
+  // 透過useParams取得路由網址的參數 (兩種方式獲取)
+  const { postId } = useParams();
+  // const  params  = useParams();
+  return (
+    <>
+    <p>Post ID:{postId}</p>
+    {/* <p>Post ID:{params.postId}</p> */}
+    </>
+  )
+}
+
+
 function App() {
   return (
     <div>
@@ -73,6 +100,7 @@ function App() {
             <NavLink to="/register"><p>註冊</p></NavLink>
             <NavLink to="/login"><p>登入</p></NavLink>
             <NavLink to="/todo"><p>待辦事項</p></NavLink>
+            <NavLink to="/post"><p>Post</p></NavLink>
         </nav>
 
         <Routes>
@@ -80,6 +108,10 @@ function App() {
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/todo" element={<Todo />}/>
+          
+          <Route path="/post" element={<Post />}>
+            <Route path=":postId" element={<PostId />}/>
+          </Route>
         </Routes>
     </div>
   );
