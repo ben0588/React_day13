@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink,Route,Routes,useNavigate } from 'react-router-dom';
+import { NavLink,Route,Routes,useNavigate,useLocation } from 'react-router-dom';
 
 
 // 首頁
@@ -21,6 +21,8 @@ const Register=()=>{
 
 // 登陸頁
 const Login=()=>{
+  const location = useLocation();
+  console.log(location.state.id)
   return (
     <>
       <h3>這是登入頁面</h3>
@@ -41,15 +43,24 @@ const Todo=()=>{
 // 登出元件
 const Logout=()=>{
   const navigator = useNavigate();
+  // useNavigate 參考文件:https://reactrouter.com/docs/en/v6/hooks/use-navigate#usenavigate
 
+  // 指定回登入頁按鈕
   const logoutBut =()=>{
-    navigator('/login')
-    // 回登陸頁
+    // 當replace為true時，當他們再次點擊回到前一頁時，不會再次看到登入頁面
+    // state可以再跳轉路由時傳遞資料
+    navigator('/login',{replace: true, state:{id:1}})
+  }
+
+  // 返回上一頁按鈕
+  const returnBut =()=>{
+    navigator(-1)
   }
 
   return (
       <>
       <button onClick={logoutBut}>登出</button>
+      <button onClick={returnBut}>返回上一頁</button>
       </>
   )
 }
